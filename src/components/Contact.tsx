@@ -3,8 +3,78 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
+import { useState } from "react";
+import { useToast } from "@/components/ui/use-toast";
 
 const Contact = () => {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    serviceType: '',
+    projectDetails: ''
+  });
+  const { toast } = useToast();
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Validate form
+    if (!formData.firstName || !formData.phone || !formData.serviceType) {
+      toast({
+        title: "Missing Information",
+        description: "Please fill in all required fields",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Create WhatsApp message
+    const message = `Hello! I'm interested in your electrical services.
+
+*Contact Details:*
+Name: ${formData.firstName} ${formData.lastName}
+Phone: ${formData.phone}
+Email: ${formData.email}
+
+*Service Requested:* ${formData.serviceType}
+
+*Project Details:*
+${formData.projectDetails || 'No additional details provided'}
+
+Please provide me with a free estimate. Thank you!`;
+
+    // WhatsApp business number (replace with actual business number)
+    const whatsappNumber = "212612345678"; // Format: country code + number (no + or spaces)
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+    
+    // Open WhatsApp
+    window.open(whatsappUrl, '_blank');
+    
+    // Show success message
+    toast({
+      title: "Redirecting to WhatsApp",
+      description: "Your message has been prepared and WhatsApp is opening...",
+    });
+
+    // Reset form
+    setFormData({
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
+      serviceType: '',
+      projectDetails: ''
+    });
+  };
   const contactInfo = [
     {
       icon: Phone,
@@ -53,51 +123,86 @@ const Contact = () => {
               <CardTitle className="text-2xl font-bold text-center">Request Free Estimate</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium mb-2">First Name</label>
-                  <Input placeholder="John" />
+              <form onSubmit={handleSubmit}>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                  <div>
+                    <label className="block text-sm font-medium mb-2">First Name *</label>
+                    <Input 
+                      name="firstName"
+                      value={formData.firstName}
+                      onChange={handleInputChange}
+                      placeholder="John"
+                      required 
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Last Name</label>
+                    <Input 
+                      name="lastName"
+                      value={formData.lastName}
+                      onChange={handleInputChange}
+                      placeholder="Doe" 
+                    />
+                  </div>
                 </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">Last Name</label>
-                  <Input placeholder="Doe" />
+                
+                <div className="mb-6">
+                  <label className="block text-sm font-medium mb-2">Email</label>
+                  <Input 
+                    name="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    placeholder="john.doe@example.com" 
+                  />
                 </div>
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium mb-2">Email</label>
-                <Input type="email" placeholder="john.doe@example.com" />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium mb-2">Phone</label>
-                <Input type="tel" placeholder="(555) 123-4567" />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium mb-2">Service Type</label>
-                <select className="w-full p-3 border border-input rounded-md bg-background">
-                  <option>Select a service</option>
-                  <option>Residential Electrical</option>
-                  <option>Commercial Electrical</option>
-                  <option>Emergency Service</option>
-                  <option>Electrical Repairs</option>
-                  <option>Safety Inspection</option>
-                  <option>Maintenance Plan</option>
-                </select>
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium mb-2">Project Details</label>
-                <Textarea 
-                  placeholder="Please describe your electrical project or issue..."
-                  className="min-h-32"
-                />
-              </div>
-              
-              <Button variant="hero" size="lg" className="w-full">
-                Get Free Estimate
-              </Button>
+                
+                <div className="mb-6">
+                  <label className="block text-sm font-medium mb-2">Phone *</label>
+                  <Input 
+                    name="phone"
+                    type="tel"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    placeholder="(555) 123-4567"
+                    required 
+                  />
+                </div>
+                
+                <div className="mb-6">
+                  <label className="block text-sm font-medium mb-2">Service Type *</label>
+                  <select 
+                    name="serviceType"
+                    value={formData.serviceType}
+                    onChange={handleInputChange}
+                    className="w-full p-3 border border-input rounded-md bg-background"
+                    required
+                  >
+                    <option value="">Select a service</option>
+                    <option value="Residential Electrical">Residential Electrical</option>
+                    <option value="Commercial Electrical">Commercial Electrical</option>
+                    <option value="Emergency Service">Emergency Service</option>
+                    <option value="Electrical Repairs">Electrical Repairs</option>
+                    <option value="Safety Inspection">Safety Inspection</option>
+                    <option value="Maintenance Plan">Maintenance Plan</option>
+                  </select>
+                </div>
+                
+                <div className="mb-6">
+                  <label className="block text-sm font-medium mb-2">Project Details</label>
+                  <Textarea 
+                    name="projectDetails"
+                    value={formData.projectDetails}
+                    onChange={handleInputChange}
+                    placeholder="Please describe your electrical project or issue..."
+                    className="min-h-32"
+                  />
+                </div>
+                
+                <Button type="submit" variant="hero" size="lg" className="w-full">
+                  Send WhatsApp Message
+                </Button>
+              </form>
               
               <p className="text-sm text-muted-foreground text-center">
                 We'll respond within 2 hours during business hours
