@@ -1,9 +1,15 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Zap } from "lucide-react";
+import { 
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+import { Menu, Zap } from "lucide-react";
 
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navItems = [
     { name: "Home", href: "#home" },
@@ -44,35 +50,44 @@ const Header = () => {
             </Button>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2 text-foreground hover:text-primary transition-colors"
-          >
-            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
+          {/* Mobile Menu Drawer */}
+          <Drawer>
+            <DrawerTrigger asChild>
+              <button className="md:hidden p-2 text-foreground hover:text-primary transition-colors">
+                <Menu className="h-6 w-6" />
+              </button>
+            </DrawerTrigger>
+            <DrawerContent>
+              <DrawerHeader>
+                <DrawerTitle className="flex items-center space-x-2">
+                  <div className="p-2 bg-primary rounded-lg glow-primary">
+                    <Zap className="h-5 w-5 text-primary-foreground" />
+                  </div>
+                  <span className="text-lg font-bold">ElectricPro</span>
+                </DrawerTitle>
+              </DrawerHeader>
+              <div className="px-4 pb-6">
+                <nav className="flex flex-col space-y-4">
+                  {navItems.map((item) => (
+                    <DrawerClose key={item.name} asChild>
+                      <a
+                        href={item.href}
+                        className="text-foreground hover:text-primary transition-colors duration-300 font-medium py-3 text-left border-b border-border/50 last:border-b-0"
+                      >
+                        {item.name}
+                      </a>
+                    </DrawerClose>
+                  ))}
+                  <DrawerClose asChild>
+                    <Button variant="hero" className="mt-4 w-full">
+                      Get Quote
+                    </Button>
+                  </DrawerClose>
+                </nav>
+              </div>
+            </DrawerContent>
+          </Drawer>
         </div>
-
-        {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="md:hidden mt-4 py-4 border-t border-border animate-fade-in">
-            <nav className="flex flex-col space-y-4">
-              {navItems.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className="text-foreground hover:text-primary transition-colors duration-300 font-medium py-2"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.name}
-                </a>
-              ))}
-              <Button variant="hero" className="mt-4 self-start">
-                Get Quote
-              </Button>
-            </nav>
-          </div>
-        )}
       </div>
     </header>
   );
