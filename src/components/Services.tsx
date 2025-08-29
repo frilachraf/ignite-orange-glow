@@ -79,16 +79,16 @@ const Services = () => {
                     {service.description}
                   </p>
                   
-                  <ul className="space-y-2 mb-6">
+                  <ul className="space-y-2 mb-6 text-start w-fit mx-auto order">
                     {service.features.map((feature, featureIndex) => (
-                      <li key={featureIndex} className="text-sm text-muted-foreground flex items-center justify-center gap-2">
+                      <li key={featureIndex} className="text-sm text-muted-foreground flex items-center justify-start gap-2">
                         <div className="w-1.5 h-1.5 bg-primary rounded-full"></div>
                         {feature}
                       </li>
                     ))}
                   </ul>
                   
-                  <Button variant="outline" className="w-full group-hover:variant-hero transition-all duration-300">
+                  <Button variant="outline" className="w-full group-hover:bg-primary group-hover:text-white transition-all duration-300">
                     Learn More
                   </Button>
                 </CardContent>
