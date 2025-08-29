@@ -1,52 +1,17 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, CheckCircle } from "lucide-react";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-} from "@/components/ui/carousel";
-import Autoplay from "embla-carousel-autoplay";
-import heroImage1 from "@/assets/hero-electrical-services.jpg";
-import heroImage2 from "@/assets/hero-electrical-panel.jpg";
-import heroImage3 from "@/assets/hero-smart-home.jpg";
-import heroImage4 from "@/assets/hero-industrial.jpg";
+import heroImage from "@/assets/hero-electrical-services.jpg";
 
 const Hero = () => {
-  const heroImages = [
-    { src: heroImage1, alt: "Professional electrical services" },
-    { src: heroImage2, alt: "Electrical panel maintenance" },
-    { src: heroImage3, alt: "Smart home electrical systems" },
-    { src: heroImage4, alt: "Industrial electrical solutions" },
-  ];
-
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Carousel with Overlay */}
+      {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
-        <Carousel
-          plugins={[
-            Autoplay({
-              delay: 5000,
-            }),
-          ]}
-          opts={{
-            align: "start",
-            loop: true,
-          }}
-          className="w-full h-full"
-        >
-          <CarouselContent className="-ml-0">
-            {heroImages.map((image, index) => (
-              <CarouselItem key={index} className="pl-0">
-                <img 
-                  src={image.src} 
-                  alt={image.alt}
-                  className="w-full h-screen object-cover"
-                />
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </Carousel>
+        <img 
+          src={heroImage} 
+          alt="Professional electrical services" 
+          className="w-full h-full object-cover"
+        />
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30"></div>
       </div>
 
