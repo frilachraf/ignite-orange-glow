@@ -53,7 +53,7 @@ ${formData.projectDetails || 'No additional details provided'}
 Please provide me with a free estimate. Thank you!`;
 
     // WhatsApp business number (replace with actual business number)
-    const whatsappNumber = "212612345678"; // Format: country code + number (no + or spaces)
+    const whatsappNumber = "212660129095"; // Format: country code + number (no + or spaces)
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
     
     // Open WhatsApp
@@ -103,7 +103,7 @@ Please provide me with a free estimate. Thank you!`;
   ];
 
   return (
-    <section id="contact" className="py-20 bg-secondary/30">
+    <section id="contact" className="py-20">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-16 animate-fade-in-up">
