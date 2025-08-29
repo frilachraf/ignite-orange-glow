@@ -106,16 +106,16 @@ const Contact = () => {
           </Card>
 
           {/* Contact Information */}
-          <div className="space-y-6 animate-fade-in">
+          <div className="space-y-6 animate-fade-in ">
             {/* Emergency CTA */}
-            <Card className="bg-primary text-primary-foreground border-0 shadow-elevated glow-primary">
-              <CardContent className="p-8 text-center">
-                <h3 className="text-2xl font-bold mb-4">Electrical Emergency?</h3>
-                <p className="mb-6 opacity-90">
+            <Card className="bg-primary text-primary-foreground border-0 shadow-elevated glow-primar w-full flex">
+              <CardContent className="py-8 text-center">
+                <h3 className="text-2xl font-bold mb-4 ">Electrical Emergency?</h3>
+                <p className="mb-6 opacity-90 ">
                   Don't wait! Our certified electricians are available 24/7 for emergency electrical services.
                 </p>
-                <Button variant="heroOutline" size="lg" className="font-bold">
-                  Call Emergency Line: (555) 911-ELEC
+                <Button variant="heroOutline" size="lg" className="w-full font-bold">
+                  Call Emergency : +212 612345678
                 </Button>
               </CardContent>
             </Card>
