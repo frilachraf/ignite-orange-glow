@@ -57,7 +57,7 @@ const Header = () => {
                 <Menu className="h-6 w-6" />
               </button>
             </DrawerTrigger>
-            <DrawerContent>
+            <DrawerContent  className="rounded-t-3xl">
               <DrawerHeader>
                 <DrawerTitle className="flex items-center space-x-2">
                   <div className="p-2 bg-primary rounded-lg glow-primary">
